@@ -37,12 +37,12 @@
             android:id="@+id/usernameLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Username"
+            android:text="Email"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/usernameEditText"
+            android:id="@+id/emailLoginEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
