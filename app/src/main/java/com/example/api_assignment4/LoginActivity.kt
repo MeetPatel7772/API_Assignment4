@@ -112,10 +112,10 @@ class LoginActivity : AppCompatActivity() {
                 //login process
                 val service = RetrofitClient.retrofit.create(ApiService::class.java)
                 GlobalScope.launch {
-                    service.loginUser(credentials).enqueue(object : Callback<LoginResponse> {
+                    service.loginUser(credentials).enqueue(object : Callback<LoginRegisterResponse> {
                         override fun onResponse(
-                            call: Call<LoginResponse>,
-                            response: Response<LoginResponse>,
+                            call: Call<LoginRegisterResponse>,
+                            response: Response<LoginRegisterResponse>,
 
                         ) {
                             if (response.body() != null) {
@@ -164,7 +164,7 @@ class LoginActivity : AppCompatActivity() {
                         }
 
 
-                        override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                        override fun onFailure(call: Call<LoginRegisterResponse>, t: Throwable) {
                             println("Failed to send request: ${t.message}")
 
                         }

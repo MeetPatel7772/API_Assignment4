@@ -12,7 +12,9 @@ import retrofit2.http.Path
 interface ApiService {
 
     @POST("login")
-    fun loginUser(@Body credential: Map<String, String>) : Call<LoginResponse>
+    fun loginUser(@Body credential: Map<String, String>) : Call<LoginRegisterResponse>
 
+    @POST("register")
+    fun registerUser(@Body userData: Map<String, String>) : Call<LoginRegisterResponse>
 
 }
