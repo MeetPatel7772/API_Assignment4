@@ -43,6 +43,14 @@ class MainActivity : AppCompatActivity(), BookAdapter.OnItemClickListener {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        fetchMovies()
+
+    }
+
+
     private fun fetchMovies() {
 
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
