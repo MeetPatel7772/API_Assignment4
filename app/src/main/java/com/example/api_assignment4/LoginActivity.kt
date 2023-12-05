@@ -10,6 +10,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
 import kotlinx.coroutines.GlobalScope
 import retrofit2.Call
 import retrofit2.Callback
@@ -113,26 +115,39 @@ class LoginActivity : AppCompatActivity() {
                     service.loginUser(credentials).enqueue(object : Callback<LoginResponse> {
                         override fun onResponse(
                             call: Call<LoginResponse>,
-                            response: Response<LoginResponse>
+                            response: Response<LoginResponse>,
+
                         ) {
-                            val loginResponse = response.body()
-                            if (loginResponse != null) {
-                                if (!loginResponse.token.isNullOrBlank()) {
+                            if (response.body() != null) {
+                                val loginResponse = response.body()
+                                if (!loginResponse!!.token.isNullOrBlank()) {
 
                                     // Save the token in SharedPreferences or other local storage
-                                    val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-                                    sharedPreferences.edit().putString("AuthToken", loginResponse.token).apply()
+                                    val sharedPreferences =
+                                        getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+                                    sharedPreferences.edit()
+                                        .putString("AuthToken", loginResponse.token).apply()
                                     println("User logged in successfully.")
-                                    Toast.makeText(this@LoginActivity, "Login Success", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(
+                                        this@LoginActivity,
+                                        "Login Success",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
 
                                     // Proceed to the next activity
                                     val i = Intent(this@LoginActivity, MainActivity::class.java)
                                     startActivity(i);
                                     clearLoginEditText()
 
-                                } else {
-                                    val errorMessage = loginResponse.error
-                                    println("Login failed: $errorMessage")
+                                }
+                            }
+                            else{
+                                val moshi = Moshi.Builder().build()
+                                val adapter: JsonAdapter<ErrorResponse> =
+                                    moshi.adapter(ErrorResponse::class.java)
+                                val errorResponse = adapter.fromJson(response.errorBody()!!.source())
+                                    val errorMessage = errorResponse!!.error
+
                                     val builder = AlertDialog.Builder(this@LoginActivity)
                                     builder.setMessage(errorMessage)
                                     builder.setTitle("Login Failed")
@@ -140,12 +155,14 @@ class LoginActivity : AppCompatActivity() {
                                         DialogInterface.OnClickListener { dialog: DialogInterface?, _: Int ->
                                             dialog?.cancel()
                                         })
-                                    runOnUiThread(java.lang.Runnable {val alertDialog = builder.create()
-                                        alertDialog.show()})
+                                    runOnUiThread(java.lang.Runnable {
+                                        val alertDialog = builder.create()
+                                        alertDialog.show()
+                                    })
 
-                                }
                             }
                         }
+
 
                         override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                             println("Failed to send request: ${t.message}")

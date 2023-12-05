@@ -10,5 +10,9 @@ data class LoginResponse(
     @Json(name = "lastname") val lastname: String?,
     @Json(name = "email") val email: String?,
     @Json(name = "token") val token: String?,
+
+)
+@JsonClass(generateAdapter = true)
+data class ErrorResponse(
     @Json(name = "error") val error: String?
 )
