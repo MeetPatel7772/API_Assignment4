@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), BookAdapter.OnItemClickListener {
     }
 
 
-    private fun fetchMovies() {
+    public fun fetchMovies() {
 
         val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         val authToken = sharedPreferences.getString("AuthToken", null)
@@ -72,9 +72,9 @@ class MainActivity : AppCompatActivity(), BookAdapter.OnItemClickListener {
                         adapter = BookAdapter(movies)
                         recyclerView.adapter = adapter
 
-//                        val swipeToDeleteCallback = SwipeGesture(this@MainActivity, adapter)
-//                        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
-//                        itemTouchHelper.attachToRecyclerView(recyclerView)
+                        val swipeToDeleteCallback = SwipeGesture(this@MainActivity, adapter)
+                        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
+                        itemTouchHelper.attachToRecyclerView(recyclerView)
 
                         adapter.setOnItemClickListener(this@MainActivity)
 

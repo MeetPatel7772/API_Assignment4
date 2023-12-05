@@ -33,11 +33,6 @@ class LoginActivity : AppCompatActivity() {
                 "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
                 ")+"
     )
-    companion object{
-        fun getInstance(): LoginActivity? {
-            return LoginActivity()
-        }}
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)

@@ -26,4 +26,7 @@ interface ApiService {
 
     @PUT("book/{id}")
     fun updateBook(@Header("x-access-token") authToken: String, @Path("id") id: String, @Body movie: Book): Call<Void>
+
+    @DELETE("book/{id}")
+    fun deleteBook(@Header("x-access-token") authToken: String, @Path("id") id: String) : Call<Void>
 }
