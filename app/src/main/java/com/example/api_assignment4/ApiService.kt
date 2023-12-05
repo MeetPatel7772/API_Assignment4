@@ -17,4 +17,6 @@ interface ApiService {
     @POST("register")
     fun registerUser(@Body userData: Map<String, String>) : Call<LoginRegisterResponse>
 
+    @GET("book")
+    fun getAllBooks(@Header("x-access-token") authToken: String): Call<List<Book>>
 }

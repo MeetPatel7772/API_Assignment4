@@ -138,6 +138,7 @@ class LoginActivity : AppCompatActivity() {
                                     val i = Intent(this@LoginActivity, MainActivity::class.java)
                                     startActivity(i);
                                     clearLoginEditText()
+                                    finish()
 
                                 }
                             }

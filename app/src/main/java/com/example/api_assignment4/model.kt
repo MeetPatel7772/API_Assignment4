@@ -17,4 +17,12 @@ data class ErrorResponse(
     @Json(name = "error") val error: String?
 )
 
+data class Book(
+    @Json(name = "_id") val id: String?,
+    @Json(name = "BooksName") val bookName: String?,
+    @Json(name ="ISBN") val isbn : String?,
+    @Json(name ="Rating") val rating : Double,
+    @Json(name ="Author") val author: String?,
+    @Json(name ="Genre") val genre: String?
 
+)
